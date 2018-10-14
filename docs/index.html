@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+                <title>reveal.js</title>
+
+                <link rel="stylesheet" href="css/reveal.css">
+                <link id="theme" rel="stylesheet" href="css/theme/black.css">
+
+                <!-- Theme used for syntax highlighting of code -->
+                <link rel="stylesheet" href="lib/css/zenburn.css">
+
+                <!-- Printing and PDF exports -->
+                <script>
+                        var link = document.createElement( 'link' );
+                        link.rel = 'stylesheet';
+                        link.type = 'text/css';
+                        link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+                        document.getElementsByTagName( 'head' )[0].appendChild( link );
+                </script>
+        </head>
+        <body>
+                <div class="reveal">
+                        <div class="slides">
+
+<section data-markdown data-separator="^\r?\n---\r?\n$" data-separator-vertical="^\r?\n~~~\r?\n$"># Go Hands-On
+
+@uphy
+
+---
+
+## 前準備
+
+SDKと開発環境を整えます。
+
+&lt;small&gt;
+※SDKはインストーラでもインストールできますが、  
+みんなanyenvが好きだと思うのでgoenv使います。
+&lt;/small&gt;
+
+---
+
+## goenv
+
+`anyenv`インストール
+
+```console
+$ git clone https://github.com/riywo/anyenv ~/.anyenv
+$ echo &#39;# anyenv&#39; &gt;&gt; ~/.bashrc
+$ echo &#39;export PATH=&#34;$HOME/.anyenv/bin:$PATH&#34;&#39; &gt;&gt; ~/.bashrc
+$ echo &#39;eval &#34;$(anyenv init - zsh)&#34;&#39; &gt;&gt; ~/.bashrc
+$ exec $bash -l
+```
+
+&lt;small&gt;※↑シェル変えてる人は適宜変更して&lt;/small&gt;
+
+`goenv`、Go 1.11.1をインストール
+
+```console
+$ anyenv install goenv
+$ goenv install 1.11.1
+$ goenv global 1.11.1
+```
+
+---
+
+## Visual Studio Code(任意)
+
+以下２つをインストール
+
+1. VSCode本体  
+   https://code.visualstudio.com/Download
+2. Extension  
+   https://code.visualstudio.com/docs/languages/go
+
+&lt;img src=&#34;data/images/vscode-extension.png&#34; style=&#34;width:400px&#34;&gt;
+
+---
+
+## Hello World実行
+
+hello.go作成
+
+```go
+package main
+
+import &#34;fmt&#34;
+
+func main(){
+    fmt.Println(&#34;hello world&#34;)
+}
+```
+
+実行
+
+```console
+$ go run main.go
+```
+
+~~~
+
+&lt;img src=&#34;data/images/helloworld.png&#34; style=&#34;width:700px&#34;&gt;</section>
+
+                        </div>
+                </div>
+
+                <script src="lib/js/head.min.js"></script>
+                <script src="js/reveal.js"></script>
+
+                <script>
+                        // More info about config & dependencies:
+                        // - https://github.com/hakimel/reveal.js#configuration
+                        // - https://github.com/hakimel/reveal.js#dependencies
+                        Reveal.initialize({
+                                autoPlayMedia: null,
+                                autoSlide: 0,
+                                autoSlideMethod: null,
+                                autoSlideStoppable: true,
+                                backgroundTransition: 'fade',
+                                center: true,
+                                controls: true,
+                                controlsBackArrows: 'faded',
+                                controlsLayout: 'bottom-right',
+                                controlsTutorial: true,
+                                defaultTiming: null,
+                                dependencies: [
+  { src: 'plugin/markdown/marked.js' },
+  { src: 'plugin/markdown/markdown.js' },
+  { src: 'plugin/notes/notes.js', async: true },
+  { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+  { src: 'plugin/zoom-js/zoom.js', async: true }
+]
+,
+                                disableLayout: false,
+                                display: 'block',
+                                embedded: false,
+                                focusBodyOnPageVisibilityChange: true,
+                                fragmentInURL: true,
+                                fragments: true,
+                                hashOneBasedIndex: false,
+                                height: 700,
+                                help: true,
+                                hideAddressBar: true,
+                                history: true,
+                                keyboard: true,
+                                keyboardCondition: null,
+                                loop: false,
+                                margin: 0.04,
+                                maxScale: 2,
+                                minScale: 0.2,
+                                mouseWheel: false,
+                                overview: true,
+                                parallaxBackgroundHorizontal: null,
+                                parallaxBackgroundImage: '',
+                                parallaxBackgroundPosition: '',
+                                parallaxBackgroundRepeat: '',
+                                parallaxBackgroundSize: '',
+                                parallaxBackgroundVertical: null,
+                                pause: true,
+                                pdfMaxPagesPerSlide: Number.POSITIVE_INFINITY,
+                                pdfPageHeightOffset: -1,
+                                pdfSeparateFragments: true,
+                                postMessage: true,
+                                postMessageEvents: false,
+                                previewLinks: false,
+                                progress: true,
+                                rollingLinks: false,
+                                rtl: false,
+                                showNotes: false,
+                                showSlideNumber: 'all',
+                                shuffle: false,
+                                slideNumber: false,
+                                touch: true,
+                                transition: 'slide',
+                                transitionSpeed: 'default',
+                                viewDistance: 3,
+                                width: 960,
+                                
+                        });
+                </script>
+        </body>
+</html>
