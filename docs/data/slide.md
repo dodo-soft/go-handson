@@ -23,7 +23,7 @@ SDKと開発環境を整えます。
 $ git clone https://github.com/riywo/anyenv ~/.anyenv
 $ echo '# anyenv' >> ~/.bashrc
 $ echo 'export PATH="$HOME/.anyenv/bin:$PATH"' >> ~/.bashrc
-$ echo 'eval "$(anyenv init - zsh)"' >> ~/.bashrc
+$ echo 'eval "$(anyenv init - bash)"' >> ~/.bashrc
 $ exec $bash -l
 ```
 
