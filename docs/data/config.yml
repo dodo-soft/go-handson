@@ -7,7 +7,7 @@ slides: []
 theme: black
 
 # Title of the index.html page.
-title: reveal.js
+title: Goハンズオン for dodosoft
 
 revealjs:
   # The "normal" size of the presentation, aspect ratio will be preserved
