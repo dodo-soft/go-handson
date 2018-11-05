@@ -1,6 +1,33 @@
 # Go Hands-On
+<small>社内ツール開発に向けて<small>
 
 @uphy
+
+---
+
+## 社内ツール開発あるある
+
+<div style="font-size:1.5rem;text-align:left">
+
+1. 依存コンポーネントのバージョンアップ等変更で使えなくなる
+   <p class="fragment">*→GoならシングルバイナリでVM等に依存しない*</p>
+2. ツールの使い方が難しく使ってもらえない
+   <p class="fragment">*→Goならシングルバイナリで前提ソフトウェア基本ない*</p>
+3. ツールの開発環境を整えるのが大変でメンテしてもらえない
+   <p class="fragment">*→Goなら基本goコマンドだけで開発できる*</p>
+
+</div>
+
+---
+
+## 本ハンズオンについて
+
+細かい言語の仕様はおいておいて、雰囲気でGoを使って小さなツールを一緒に作ります。  
+
+1. Hello World
+2. CLIアプリケーション(ライブラリの利用)
+3. Excel生成アプリ
+4. HTTPサーバー
 
 ---
 
@@ -24,7 +51,7 @@ $ git clone https://github.com/riywo/anyenv ~/.anyenv
 $ echo '# anyenv' >> ~/.bashrc
 $ echo 'export PATH="$HOME/.anyenv/bin:$PATH"' >> ~/.bashrc
 $ echo 'eval "$(anyenv init - bash)"' >> ~/.bashrc
-$ exec $bash -l
+$ exec $SHELL -l
 ```
 
 <small>※↑シェル変えてる人は適宜変更して</small>
