@@ -67,12 +67,3 @@ $ go run main.go
 ~~~
 
 <img src="data/images/helloworld.png" style="width:700px">
-
-~~~
-
-## 今日のサンプルコード取得
-
-```console
-$ go get github.com/dodo-soft/go-handson/...
-$ code $(go env GOPATH)/dodo-soft/go-handson/samples
-```

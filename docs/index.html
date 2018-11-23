@@ -125,15 +125,6 @@ $ go run main.go
 ~~~
 
 &lt;img src=&#34;data/images/helloworld.png&#34; style=&#34;width:700px&#34;&gt;
-
-~~~
-
-## 今日のサンプルコード取得
-
-```console
-$ go get github.com/dodo-soft/go-handson/...
-$ code $(go env GOPATH)/dodo-soft/go-handson/samples
-```
 </section>
 
 <section data-markdown data-separator="^\r?\n---\r?\n$" data-separator-vertical="^\r?\n~~~\r?\n$">## Goの文法
@@ -236,6 +227,15 @@ func func2() (string, error) {
 }
 ```</section>
 
+<section data-markdown data-separator="^\r?\n---\r?\n$" data-separator-vertical="^\r?\n~~~\r?\n$">## 今日のサンプルコード取得
+
+```console
+$ go get github.com/dodo-soft/go-handson/...
+$ code $(go env GOPATH)/src/github.com/dodo-soft/go-handson/samples
+```
+
+開いたVSCodeで今日は作業します！</section>
+
 <section data-markdown data-separator="^\r?\n---\r?\n$" data-separator-vertical="^\r?\n~~~\r?\n$">## 1.足し算
 &lt;small&gt;コーディング、実行、テスト、ビルドを一通り体験する&lt;/small&gt;
 
@@ -244,23 +244,6 @@ func func2() (string, error) {
 ```sh
 $ ./add 1 2
 3
-```
-
-- `os.Args`
-- `strconv.Atoi(s) (int, error)`
-- `fmt.Println(s)`
-- `fmt.Printf(format, args...)`
-
-~~~
-
-### 作業ディレクトリ作成
-
-作業ディレクトリは、今日はとりあえずGOPATH直下にします。
-
-```console
-$ cd $(go env GOPATH)
-$ mkdir -p github.com/dodosoft/samples/add
-$ code add
 ```
 
 ~~~
@@ -544,6 +527,9 @@ $ curl -XPOST localhost:8080/todolist/1/text -F &#34;text=New My Task2&#34;
 ### サンプル
 
 `samples/todo/main.go`</section>
+
+<section data-markdown data-separator="^\r?\n---\r?\n$" data-separator-vertical="^\r?\n~~~\r?\n$">## お疲れ様でした。
+</section>
 
                         </div>
                 </div>

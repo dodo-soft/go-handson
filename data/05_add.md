@@ -8,23 +8,6 @@ $ ./add 1 2
 3
 ```
 
-- `os.Args`
-- `strconv.Atoi(s) (int, error)`
-- `fmt.Println(s)`
-- `fmt.Printf(format, args...)`
-
-~~~
-
-### 作業ディレクトリ作成
-
-作業ディレクトリは、今日はとりあえずGOPATH直下にします。
-
-```console
-$ cd $(go env GOPATH)
-$ mkdir -p github.com/dodosoft/samples/add
-$ code add
-```
-
 ~~~
 
 ### サンプル
