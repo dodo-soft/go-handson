@@ -7,12 +7,11 @@ import (
 func main() {
 	e := echo.New()
 	message := ""
-	e.POST("memo", func(c echo.Context) error {
-		message = c.FormValue("message")
-		return c.String(200, message)
-	})
+	// メモ取得
 	e.GET("memo", func(c echo.Context) error {
 		return c.String(200, message)
 	})
+	// メモの保存
+	// ...
 	e.Start(":8080")
 }

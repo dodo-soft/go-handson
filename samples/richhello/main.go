@@ -9,27 +9,17 @@ import (
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "richhello"
-	app.Version = "1.0.0"
-	app.Usage = "Print messages multiple times."
-	app.Description = "Print messages multiple times."
-
 	app.Flags = []cli.Flag{
 		cli.IntFlag{
 			Name:  "n,times",
 			Value: 1,
 		},
 	}
-	app.ArgsUsage = "[message]"
 	app.Action = func(ctx *cli.Context) error {
 		msg := ctx.Args().First()
-		if len(msg) == 0 {
-			msg = "hello"
-		}
+		// msgのデフォルト値設定
 		times := ctx.Int("times")
-		for i := 0; i < times; i++ {
-			fmt.Println(msg)
-		}
+		// times回、msgを標準出力に出力
 		return nil
 	}
 	if err := app.Run(os.Args); err != nil {

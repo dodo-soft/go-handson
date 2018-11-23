@@ -35,19 +35,7 @@ func main() {
 				return nil
 			},
 		},
-		cli.Command{
-			Name:        "reverse",
-			Usage:       "Print reverse ordered message.",
-			Description: "Print reverse ordered message.",
-			Action: func(ctx *cli.Context) error {
-				msg := []rune(ctx.Args().First())
-				for i := 0; i < len(msg); i++ {
-					fmt.Print(string(msg[len(msg)-i-1]))
-				}
-				fmt.Println()
-				return nil
-			},
-		},
+		// reverseコマンドを実装
 	}
 
 	if err := app.Run(os.Args); err != nil {
