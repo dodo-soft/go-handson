@@ -26,12 +26,37 @@
                         <div class="slides">
 
 <section data-markdown data-separator="^\r?\n---\r?\n$" data-separator-vertical="^\r?\n~~~\r?\n$"># Go Hands-On
+&lt;small&gt;社内ツール開発に向けて&lt;small&gt;
 
 @uphy
 
 ---
 
-## 前準備
+## 社内ツール開発あるある
+
+&lt;div style=&#34;font-size:1.5rem;text-align:left&#34;&gt;
+
+1. 依存コンポーネントのバージョンアップ等変更で使えなくなる
+   &lt;p class=&#34;fragment&#34;&gt;*→GoならシングルバイナリでVM等に依存しない*&lt;/p&gt;
+2. ツールの使い方が難しく使ってもらえない
+   &lt;p class=&#34;fragment&#34;&gt;*→Goならシングルバイナリで前提ソフトウェア基本ない*&lt;/p&gt;
+3. ツールの開発環境を整えるのが大変でメンテしてもらえない
+   &lt;p class=&#34;fragment&#34;&gt;*→Goなら基本goコマンドだけで開発できる*&lt;/p&gt;
+
+&lt;/div&gt;
+
+---
+
+## 本ハンズオンについて
+
+細かい言語の仕様はおいておいて、雰囲気でGoを使って小さなツールを一緒に作ります。  
+
+- デザイン気にしない
+- 難しいロジック組まない
+- 突き詰めない
+</section>
+
+<section data-markdown data-separator="^\r?\n---\r?\n$" data-separator-vertical="^\r?\n~~~\r?\n$">## 前準備
 
 SDKと開発環境を整えます。
 
@@ -51,7 +76,7 @@ $ git clone https://github.com/riywo/anyenv ~/.anyenv
 $ echo &#39;# anyenv&#39; &gt;&gt; ~/.bashrc
 $ echo &#39;export PATH=&#34;$HOME/.anyenv/bin:$PATH&#34;&#39; &gt;&gt; ~/.bashrc
 $ echo &#39;eval &#34;$(anyenv init - bash)&#34;&#39; &gt;&gt; ~/.bashrc
-$ exec $bash -l
+$ exec $SHELL -l
 ```
 
 &lt;small&gt;※↑シェル変えてる人は適宜変更して&lt;/small&gt;
@@ -81,8 +106,6 @@ $ goenv global 1.11.1
 
 ## Hello World実行
 
-hello.go作成
-
 ```go
 package main
 
@@ -101,7 +124,426 @@ $ go run main.go
 
 ~~~
 
-&lt;img src=&#34;data/images/helloworld.png&#34; style=&#34;width:700px&#34;&gt;</section>
+&lt;img src=&#34;data/images/helloworld.png&#34; style=&#34;width:700px&#34;&gt;
+
+~~~
+
+## 今日のサンプルコード取得
+
+```console
+$ go get github.com/dodo-soft/go-handson/...
+$ code $(go env GOPATH)/dodo-soft/go-handson/samples
+```
+</section>
+
+<section data-markdown data-separator="^\r?\n---\r?\n$" data-separator-vertical="^\r?\n~~~\r?\n$">## Goの文法
+
+今日必要な文法を紹介
+
+だいたい雰囲気でいけそう？
+
+~~~
+
+### 変数定義
+
+```go
+var i int = 10
+var i = 10
+i := 10
+```
+
+~~~
+
+### for
+
+```go
+for i := 0; i &lt; 10; i++ {
+	// ...
+}
+for {
+
+}
+for i &lt; 10 {
+
+}
+```
+
+- whileはない
+- ()は不要
+
+~~~
+
+### if
+
+```go
+if i &lt; 10 {
+}
+```
+
+~~~
+
+### switch
+
+```go
+switch s {
+    case &#34;a&#34;:
+        // break不要
+    case &#34;b&#34;:
+    default:
+        fmt.Println(&#34;aaa&#34;)
+}
+```
+
+~~~
+
+### 関数
+
+```go
+func main(){
+    fmt.Println(f(2))
+}
+func f(n int) int {
+    return n * 2
+}
+```
+
+~~~
+
+### エラー処理
+
+```go
+func main(){
+    if err := func1(); err != nil {
+        fmt.Println(&#34;failed&#34;)
+    }
+}
+func func1() error {
+    return errors.New(&#34;an error&#34;)
+}
+```
+
+```go
+func main(){
+    s, err := func2()
+    if err == nil {
+        fmt.Println(s)
+    } else {
+        fmt.Println(&#34;failed&#34;)
+    }
+}
+func func2() (string, error) {
+    return &#34;result&#34;, nil
+}
+```</section>
+
+<section data-markdown data-separator="^\r?\n---\r?\n$" data-separator-vertical="^\r?\n~~~\r?\n$">## 1.足し算
+&lt;small&gt;コーディング、実行、テスト、ビルドを一通り体験する&lt;/small&gt;
+
+標準出力から受け取ったスペース区切りの２つの整数を足した結果をコンソールに出力
+
+```sh
+$ ./add 1 2
+3
+```
+
+- `os.Args`
+- `strconv.Atoi(s) (int, error)`
+- `fmt.Println(s)`
+- `fmt.Printf(format, args...)`
+
+~~~
+
+### 作業ディレクトリ作成
+
+作業ディレクトリは、今日はとりあえずGOPATH直下にします。
+
+```console
+$ cd $(go env GOPATH)
+$ mkdir -p github.com/dodosoft/samples/add
+$ code add
+```
+
+~~~
+
+### サンプル
+
+samples/add/main.go
+
+~~~
+
+### 実行
+
+`go run`コマンドで、ビルドと実行を同時に行う。  
+VSCode下部のターミナルで、以下を実行：
+
+```console
+$ cd samples/add
+$ go run main.go 1 2
+3
+```
+
+~~~
+
+### 関数化
+
+`main.go`を改変して、２つの文字列を受け取り足し合わせる関数を抽出する。  
+戻り値は足した結果と、不正文字列だった場合のエラー
+
+```go
+package main
+
+...
+
+func add(s1 string, s2 string) (int, error) {
+    ...
+    return num1 + num2, nil
+}
+```
+
+~~~
+
+### テスト作成
+
+`main.go`を開いて、Ctrl+Shift+P、`Go: Generate Unit Tests for Function`を選択
+
+~~~
+
+### テスト作成
+
+ここを
+
+```go
+// TODO: Add test cases.
+```
+
+こんな感じに
+
+```go
+{
+    name: &#34;simple&#34;,
+    args: args{
+        s1: &#34;1&#34;,
+        s2: &#34;2&#34;,
+    },
+    want: 3,
+},
+```
+
+~~~
+
+### テスト実行
+
+- `run test`でその関数のテスト
+- `run package tests`でそのパッケージ内のすべてのテスト実行＆カバレッジ測定
+
+~~~
+
+### ビルド/実行
+
+```console
+$ go build -o add
+$ ./add 1 2
+3
+```
+
+~~~
+
+### クロスプラットフォームビルド
+
+環境変数GOARCH/GOOSを指定することで、異なるプラットフォーム向けのバイナリがビルドできる。
+
+例
+
+```console
+$ GOARCH=386 GOOS=windows go build -o add.exe
+$ GOARCH=amd64 GOOS=darwin go build -o add
+$ GOARCH=arm GOOS=linux go build -o add
+```
+</section>
+
+<section data-markdown data-separator="^\r?\n---\r?\n$" data-separator-vertical="^\r?\n~~~\r?\n$">## 2.1 少しリッチなhello world
+
+&lt;small&gt;外部パッケージを取得して使ってみる&lt;/small&gt;
+
+オプション指定機能付きのCLIを作る
+
+```
+$ ./richhello
+hello
+$ ./richhello --times 3
+hello
+hello
+hello
+$ ./richhello -n 2
+hello
+hello
+$ ./richhello -n 3 &#34;foo&#34;
+foo
+foo
+foo
+```
+
+~~~
+
+### パッケージの取得
+
+```console
+$ go get github.com/urfave/cli
+```
+
+取得したものは以下の場所に展開されます。
+
+```console
+ls $(go env GOPATH)/src/github.com/urfave/cli
+```
+
+ちなみに、goファイル群、別に特別なことはなく、同じような内容です。
+
+```console
+$ head $(go env GOPATH)/src/github.com/urfave/cli/app.go
+```
+
+gitリポジトリとしてアクセスできるようにすれば、パッケージとして公開できる!
+
+[awesome-go](https://github.com/avelino/awesome-go)とか見てみると楽しいよ！
+
+~~~
+
+### サンプル
+
+`samples/richhello/main.go`
+
+~~~
+
+暇だったら色つけたり、動かしたりしてみても面白いよ！
+
+- 色: https://github.com/ttacon/chalk
+- プログレスバー: https://github.com/schollz/progressbar
+- ターミナルUI: https://github.com/gizak/termui</section>
+
+<section data-markdown data-separator="^\r?\n---\r?\n$" data-separator-vertical="^\r?\n~~~\r?\n$">## 2.2 少しリッチなhello world - サブコマンド
+
+git add, git commitのようなサブコマンド形式にしてみます。
+
+```go
+$ ./richhello times -n 3 hello
+hello
+hello
+hello
+$ ./richhello reverse hello
+olleh
+```
+
+~~~
+
+### サンプル
+
+`samples/richhello-sub/main.go`
+
+~~~
+
+暇だったら弊社だいすきExcelとか使ってみても面白いかもしれない
+
+- https://github.com/360EntSecGroup-Skylar/excelize</section>
+
+<section data-markdown data-separator="^\r?\n---\r?\n$" data-separator-vertical="^\r?\n~~~\r?\n$">## 2.3 少しリッチなhello world - 設定ファイル
+
+YAML形式でコマンドの設定をファイル化してみます。
+
+config.yml
+
+```yaml
+message: hello
+times: 3
+```
+
+```console
+$ ./richhello -c config.yml
+```
+
+~~~
+
+### パッケージ取得
+
+```console
+$ go get gopkg.in/yaml.v2
+```
+
+~~~
+
+### サンプル
+
+`samples/richhello-config/main.go`
+
+試しに何か設定項目を追加して、プログラムの挙動変えてみて！
+</section>
+
+<section data-markdown data-separator="^\r?\n---\r?\n$" data-separator-vertical="^\r?\n~~~\r?\n$">## 3. メモAPI
+
+POSTで送ったメッセージを、GETで取得できるAPI
+
+```console
+$ curl -XPOST localhost:8080/memo -Fmessage=hello
+hello
+$ curl localhost:8080/memo
+hello
+```
+
+~~~
+
+### echoの利用
+
+```console
+$ go get -u github.com/labstack/echo/...
+```
+
+- echo.New(): echoインスタンス作成
+- (*echo.Echo) POST(path, handlerFunc): POSTリクエストハンドラを設定
+- (*echo.Echo) GET(path, handlerFunc): GETリクエストハンドラを設定
+- (*echo.Echo) Start(address): echoによるHTTPサーバーの開始
+- (echo.Context) String(code, s): HTTPレスポンスコード`code`で文字列のレスポンスを返す。
+
+~~~
+
+### サンプル
+
+`samples/memo/main.go`</section>
+
+<section data-markdown data-separator="^\r?\n---\r?\n$" data-separator-vertical="^\r?\n~~~\r?\n$">## 3. TODOリストAPI
+
+こんな感じのAPI作る
+
+```console
+$ curl -XPOST localhost:8080/todolist/ -F &#34;text=My Task1&#34;
+{&#34;id&#34;:&#34;0&#34;,&#34;done&#34;:false,&#34;text&#34;:&#34;My Task1&#34;}
+
+$ curl -XPOST localhost:8080/todolist/ -F &#34;text=My Task2&#34;
+{&#34;id&#34;:&#34;0&#34;,&#34;done&#34;:false,&#34;text&#34;:&#34;My Task2&#34;}
+
+$ curl localhost:8080/todolist/
+[{&#34;id&#34;:&#34;0&#34;,&#34;done&#34;:false,&#34;text&#34;:&#34;My Task1&#34;},{&#34;id&#34;:&#34;1&#34;,&#34;done&#34;:false,&#34;text&#34;:&#34;My Task2&#34;}]
+
+$ curl localhost:8080/todolist/0
+{&#34;id&#34;:&#34;0&#34;,&#34;done&#34;:false,&#34;text&#34;:&#34;My Task1&#34;}
+
+$ curl -XDELETE localhost:8080/todolist/0
+{&#34;id&#34;:&#34;0&#34;,&#34;done&#34;:false,&#34;text&#34;:&#34;My Task1&#34;}
+
+$ curl -XPOST localhost:8080/todolist/1/done
+{&#34;id&#34;:&#34;1&#34;,&#34;done&#34;:true,&#34;text&#34;:&#34;My Task2&#34;}
+
+$ curl -XPOST localhost:8080/todolist/1/undone
+{&#34;id&#34;:&#34;1&#34;,&#34;done&#34;:false,&#34;text&#34;:&#34;My Task2&#34;}
+
+$ curl -XPOST localhost:8080/todolist/1/text -F &#34;text=New My Task2&#34;
+{&#34;id&#34;:&#34;1&#34;,&#34;done&#34;:false,&#34;text&#34;:&#34;New My Task2&#34;}
+```
+
+~~~
+
+### サンプル
+
+`samples/todo/main.go`</section>
 
                         </div>
                 </div>

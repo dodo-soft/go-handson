@@ -1,9 +1,3 @@
-# Go Hands-On
-
-@uphy
-
----
-
 ## 前準備
 
 SDKと開発環境を整えます。
@@ -24,7 +18,7 @@ $ git clone https://github.com/riywo/anyenv ~/.anyenv
 $ echo '# anyenv' >> ~/.bashrc
 $ echo 'export PATH="$HOME/.anyenv/bin:$PATH"' >> ~/.bashrc
 $ echo 'eval "$(anyenv init - bash)"' >> ~/.bashrc
-$ exec $bash -l
+$ exec $SHELL -l
 ```
 
 <small>※↑シェル変えてる人は適宜変更して</small>
@@ -54,8 +48,6 @@ $ goenv global 1.11.1
 
 ## Hello World実行
 
-hello.go作成
-
 ```go
 package main
 
@@ -75,3 +67,12 @@ $ go run main.go
 ~~~
 
 <img src="data/images/helloworld.png" style="width:700px">
+
+~~~
+
+## 今日のサンプルコード取得
+
+```console
+$ go get github.com/dodo-soft/go-handson/...
+$ code $(go env GOPATH)/dodo-soft/go-handson/samples
+```
